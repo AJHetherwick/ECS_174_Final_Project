@@ -12,6 +12,12 @@ What I plan to do:
     - s fits T4 GPU comfortably. 
 
 - Can also try frozen backbone (just need the freeze=x arg)
+- My YOLO26s was tested on 508 images
+- bird has bad recall -> A lot of FN
+- decimal next to predicted box symbolizes detection confidence (class X, box overlap)
+- F1 = 2*(precision*recall) / (precision + recall)
+- precision = TP/TP+FP
+- recall = TP/TP+FN
 
 For easy reference:
 Luis' initial results:
