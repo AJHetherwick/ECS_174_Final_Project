@@ -1,0 +1,61 @@
+luis trained on 8000 img subset from total ~24,000
+- slight differences in train/validation size can come from data download source, iscrowd=False clause, etc. 
+- YOLO (from package Ultralytics) utilizes optimizer=auto to auto choose learning rate, momentum
+
+What I plan to do:
+- YOLO26 model pretrained from COCO on ~8,000 subset
+  - YOLOv8, YOLO11 use Distribution Focal Loss (DFL) for box-regression which instead of predicting each box edge as a single number 
+    (as seen in lecture with (x, y, h, w)), it instead predicts a probability distribution over a set of bins, then final edge = expectation 
+    over the distribution. 
+  - DFL based approaches cost extra output channels, which is why YOLO26 drops it. 
+  - YOLO comes in nano (n, ~2.6M params), s (small, ~9.4M params), m (medium, ~20M params), l (large), and x (extra-large). 
+    - s fits T4 GPU comfortably. 
+
+- Can also try frozen backbone (just need the freeze=x arg)
+
+For easy reference:
+Luis' initial results:
+
+Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 64/64 6.0it/s 10.8s
+all       1016       2700      0.805      0.683      0.758      0.562
+bird	  125        440      0.752      0.343      0.442      0.267
+cat       184        202      0.819      0.817       0.86      0.667
+dog	  177        218      0.735       0.72      0.759      0.616
+horse     128        273      0.807      0.634      0.729      0.542
+sheep     65        361      0.719      0.609      0.682      0.454
+cow       87        380      0.776      0.603      0.696      0.474
+elephant  89        255      0.788      0.743      0.816      0.597
+bear      49         71      0.839      0.746      0.823      0.673
+zebra     85        268      0.891      0.791      0.878       0.65
+giraffe   101        232      0.927      0.827      0.899      0.684
+
+
+
+results:
+val: New cache created: /content/yolo_animals/labels/test.cache
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% ━━━━━━━━━━━━ 32/32 3.9it/s 8.2s
+                   all        508       1365      0.855       0.76      0.834      0.651
+                  bird         72        236      0.824      0.395       0.53      0.345
+                   cat         98        107      0.871      0.945      0.936      0.753
+                   dog         89        116      0.834       0.75      0.835       0.71
+                 horse         63        148      0.878       0.77      0.849      0.628
+                 sheep         36        188       0.79       0.68       0.77      0.551
+                   cow         43        163      0.803      0.648      0.754      0.545
+              elephant         47        151      0.767      0.763      0.825      0.625
+                  bear         18         28      0.895      0.909      0.967      0.849
+                 zebra         43        139      0.914      0.841      0.932      0.724
+               giraffe         46         89      0.972      0.899      0.945      0.775
+Speed: 1.4ms preprocess, 7.2ms inference, 0.0ms loss, 1.8ms postprocess per image
+Results saved to /content/runs/detect/val
+test mAP50   : 0.8344
+test mAP50-95: 0.6506
+  bird       mAP50-95 = 0.345
+  cat        mAP50-95 = 0.753
+  dog        mAP50-95 = 0.710
+  horse      mAP50-95 = 0.628
+  sheep      mAP50-95 = 0.551
+  cow        mAP50-95 = 0.545
+  elephant   mAP50-95 = 0.625
+  bear       mAP50-95 = 0.849
+  zebra      mAP50-95 = 0.724
+  giraffe    mAP50-95 = 0.775
