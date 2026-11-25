@@ -74,3 +74,17 @@ To discuss:
 - Luis trained YOLOv11n and I did YOLO26s on ~8k train, ~1.1k test subset. For writeup should we train on full 20k?
 	- My ~8k runtime was about 1.5 hr
 - Try YOLOv11s
+- Decoupled CNN? Residual NN?
+
+During meeting:
+- Millen should train on 8k subset?
+- Train full 20k on final model
+- In related work section, add other people's results. 
+- Try frozen backbone
+- Write what model regime Joy can try6
+- Make sure to train on 30 epochs
+
+Model regimes we have so far:
+- YOLO26s
+- YOLOv11n
+- Luis added some more?
