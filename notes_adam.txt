@@ -65,3 +65,12 @@ test mAP50-95: 0.6506
   bear       mAP50-95 = 0.849
   zebra      mAP50-95 = 0.724
   giraffe    mAP50-95 = 0.775
+
+
+------------------------------------------
+Notes for meeting 11/25
+
+To discuss:
+- Luis trained YOLOv11n and I did YOLO26s on ~8k train, ~1.1k test subset. For writeup should we train on full 20k?
+	- My ~8k runtime was about 1.5 hr
+- Try YOLOv11s
